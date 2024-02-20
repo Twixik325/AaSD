@@ -15,7 +15,7 @@ int main()
 	srand(time(0));
 	setlocale(LC_ALL, "rus");
 	int n, index;
-	float C, a , b;
+	float C, a, b;
 	int num = 0;
 	bool F = false;
 	float sum = 0;
