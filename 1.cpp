@@ -1,4 +1,4 @@
-/*Дан одномерный массив. Написать функцию, определяющую минимальный, максимальный элементы массива и среднее арифметическое минимального и максимального элементов. 
+/*Дан одномерный массив. Написать функцию, определяющую минимальный, максимальный элементы массива и среднее арифметическое минимального и максимального элементов.
 Кроме того, программа должна иметь функцию вво-да одномерного массива и функцию вывода. */
 #include <iostream>
 #include <cstdlib>
@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void func(int *arr,int n) {
+void func(int* arr, int n) {
 	double average;
 	int min = arr[0], max = arr[0];
 	for (int i = 0; i < n; i++) {
@@ -20,10 +20,10 @@ void func(int *arr,int n) {
 		cout << arr[i] << " ";
 	}
 	cout << endl;
-	cout << "Min Element: " << min << endl;
-	cout << "Max Element: " << max << endl;
+	cout << "Минимальный элемент: " << min << endl;
+	cout << "Максимальный элемент: " << max << endl;
 	average = (min + max) / 2.0;
-	cout << "Average: " << average << endl;
+	cout << "Среднее: " << average << endl;
 }
 
 int main()
@@ -31,9 +31,9 @@ int main()
 	srand(time(0));
 	setlocale(LC_ALL, "Rus");
 	int n;
-	cout << "Write the num of the elements" << endl;
+	cout << "Введите количество элементов" << endl;
 	cin >> n; // Считываем количество элементов массива
-	int* arr = new int [n]; // Выделяем память для массива
+	int* arr = new int[n]; // Выделяем память для массива
 	for (int i = 0; i < n; i++) {
 		arr[i] = rand() % 10; // Заполняем массив случайными числами от 0 до 9
 	}
