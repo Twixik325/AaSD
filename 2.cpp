@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void sumOfRow(int** arr, int n) {
+void Rowsum(int** arr, int n) {
     int maxSum = 0;
     int index = 0;
     for (int i = 0; i < n; i++) {
@@ -38,7 +38,7 @@ int main()
         cout << endl;
     }
 
-    sumOfRow(arr, 6);
+    Rowsum(arr, 6);
 
     for (int i = 0; i < rows; i++)
     {
