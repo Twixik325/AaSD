@@ -8,109 +8,81 @@
 •	Все функции объединить в единый листинг с помощью меню.
 */
 #include <iostream>
-
 using namespace std;
-
 // Структура для элемента списка
 struct Node {
     int data;
     Node* next;
 };
-
-// Класс для линейного списка
-class LinkedList {
-private:
-    Node* head; // Указатель на первый элемент списка
-public:
-    // Конструктор
-    LinkedList() : head(nullptr) {}
-
-    // Деструктор для освобождения памяти
-    ~LinkedList() {
-        Node* current = head;
-        while (current != nullptr) {
-            Node* next = current->next;
-            delete current;
-            current = next;
-        }
+// Функция для вставки элемента в начало списка
+void insert(Node*& head, int value) {
+    Node* newNode = new Node;
+    newNode->data = value;
+    newNode->next = head;
+    head = newNode;
+}
+// Функция для вывода списка на экран
+void display(Node* head) {
+    Node* current = head;
+    while (current != nullptr) {
+        cout << current->data << " ";
+        current = current->next;
     }
-
-    // Вставка элемента в начало списка
-    void insert(int value) {
-        Node* newNode = new Node;
-        newNode->data = value;
-        newNode->next = head;
-        head = newNode;
+    cout << endl;
+}
+// Функция для поиска элемента по значению
+Node* searchByValue(Node* head, int value) {
+    Node* current = head;
+    while (current != nullptr) {
+        if (current->data == value)
+            return current;
+        current = current->next;
     }
-
-    // Вывод списка на экран
-    void display() {
-        Node* current = head;
-        while (current != nullptr) {
-            cout << current->data << " ";
-            current = current->next;
-        }
-        cout << endl;
+    return nullptr; // Элемент не найден
+}
+// Функция для поиска элемента по порядковому номеру
+Node* searchByPosition(Node* head, int position) {
+    Node* current = head;
+    int count = 0;
+    while (current != nullptr) {
+        if (count == position)
+            return current;
+        current = current->next;
+        count++;
     }
-
-    // Поиск элемента по значению
-    Node* searchByValue(int value) {
-        Node* current = head;
-        while (current != nullptr) {
-            if (current->data == value)
-                return current;
-            current = current->next;
-        }
-        return nullptr; // Элемент не найден
+    return nullptr; // Элемент не найден
+}
+// Функция для подсчета и вывода количества элементов в списке
+void countAndDisplay(Node* head) {
+    int count = 0;
+    Node* current = head;
+    while (current != nullptr) {
+        count++;
+        current = current->next;
     }
-
-    // Поиск элемента по порядковому номеру
-    Node* searchByPosition(int position) {
-        Node* current = head;
-        int count = 0;
-        while (current != nullptr) {
-            if (count == position)
-                return current;
-            current = current->next;
-            count++;
-        }
-        return nullptr; // Элемент не найден
-    }
-
-    // Подсчет и вывод количества элементов в списке
-    void countAndDisplay() {
-        int count = 0;
-        Node* current = head;
-        while (current != nullptr) {
-            count++;
-            current = current->next;
-        }
-        cout << "Количество элементов в списке: " << count << endl;
-    }
-
-    // Построение кольцевого списка
-    void makeCircular() {
-        if (head == nullptr) return;
-        Node* current = head;
-        while (current->next != nullptr)
-            current = current->next;
-        current->next = head; // Сделать последний элемент ссылкой на первый
-    }
-
-    // Вывод кольцевого списка
-    void displayCircular() {
-        if (head == nullptr) return;
-        Node* current = head;
-        do {
-            cout << current->data << " ";
-            current = current->next;
-        } while (current != head);
-        cout << endl;
-    }
-};
-
+    cout << "Количество элементов в списке: " << count << endl;
+}
+// Функция для построения кольцевого списка
+void makeCircular(Node* head) {
+    if (head == nullptr) return;
+    Node* current = head;
+    while (current->next != nullptr)
+        current = current->next;
+    current->next = head; // Сделать последний элемент ссылкой на первый
+}
+// Функция для вывода кольцевого списка
+void displayCircular(Node* head) {
+    if (head == nullptr) return;
+    Node* current = head;
+    do {
+        cout << current->data << " ";
+        current = current->next;
+    } while (current != head);
+    cout << endl;
+}
 int main() {
-    LinkedList list;
+    setlocale(LC_ALL, "Russian");
+    Node* head = nullptr; // Указатель на первый элемент списка
     int choice;
     int value;
     Node* foundNode;
@@ -129,16 +101,16 @@ int main() {
         case 1:
             cout << "Введите значение: ";
             cin >> value;
-            list.insert(value);
+            insert(head, value);
             break;
         case 2:
             cout << "Список: ";
-            list.display();
+            display(head);
             break;
         case 3:
             cout << "Введите значение для поиска: ";
             cin >> value;
-            foundNode = list.searchByValue(value);
+            foundNode = searchByValue(head, value);
             if (foundNode != nullptr)
                 cout << "Элемент найден: " << foundNode->data << endl;
             else
@@ -148,22 +120,22 @@ int main() {
             int position;
             cout << "Введите порядковый номер для поиска: ";
             cin >> position;
-            foundNode = list.searchByPosition(position);
+            foundNode = searchByPosition(head, position);
             if (foundNode != nullptr)
                 cout << "Элемент найден: " << foundNode->data << endl;
             else
                 cout << "Элемент не найден\n";
             break;
         case 5:
-            list.countAndDisplay();
+            countAndDisplay(head);
             break;
         case 6:
-            list.makeCircular();
+            makeCircular(head);
             cout << "Кольцевой список построен\n";
             break;
         case 7:
             cout << "Кольцевой список: ";
-            list.displayCircular();
+            displayCircular(head);
             break;
         case 0:
             cout << "Программа завершена\n";
@@ -172,6 +144,12 @@ int main() {
             cout << "Неверный ввод\n";
         }
     } while (choice != 0);
-
+    // Освобождение памяти
+    Node* current = head;
+    while (current != nullptr) {
+        Node* next = current->next;
+        delete current;
+        current = next;
+    }
     return 0;
 }
